@@ -1,0 +1,12 @@
+.header {
+  padding: 2em;
+  text-align: center;
+  font-size: 30px;
+  border: 2px black solid;
+  cursor: pointer;
+}
+
+.noteful {
+  color: black;
+}
+

@@ -1,0 +1,17 @@
+.folders {
+  display:flex;
+  float: left;
+  flex-direction: column;
+  width: 200px;
+  border: 2px solid black;
+  height: 500px;
+}
+
+.folder {
+  font-size: 20px;
+  border: 2px solid black;
+  width: 200px;
+  height: 100px;
+  color: black;
+  cursor: pointer;
+}

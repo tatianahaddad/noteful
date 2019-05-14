@@ -1,0 +1,13 @@
+.notes {
+  width: 70%;
+  display: flex;
+  float: right;
+  flex-direction: column;
+  height: 500px;
+}
+
+.note {
+  border: 2px solid black;
+  height: 100px;
+  width: 500px;
+}
