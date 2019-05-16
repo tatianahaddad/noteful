@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import NotefulForm from './NotefulForm'
 import NotefulContext from './notefulContext';
 import config from './config'
+import PropType from 'prop-types'
 
 export default class AddFolder extends Component {
   static defaultProps = {
@@ -10,7 +11,6 @@ export default class AddFolder extends Component {
     },
   }
   static contextType = NotefulContext;
-
   handleSubmit = e => {
     e.preventDefault()
     const folder = {
@@ -37,24 +37,40 @@ export default class AddFolder extends Component {
       })
   }
 
+  updateName(name) {
+    this.setState(
+      {name}, () => this.validateName(name)
+    )
+  }
+
+  validateName(enteredValue) {
+    const value = enteredValue; 
+  }
+
   render() {
+    
     return (
       <section className='AddFolder'>
         <h2>Create a folder</h2>
-        <NotefulForm onSubmit={this.handleSubmit}>
-          <div className='field'>
-            <label htmlFor='folder-name-input'>
-              Name
-            </label>
-            <input type='text' id='folder-name-input' name='folder-name' />
-          </div>
-          <div className='buttons'>
-            <button type='submit'>
-              Add folder
-            </button>
-          </div>
-        </NotefulForm>
+          <NotefulForm onSubmit={this.handleSubmit}>
+            <div className='field'>
+              <label htmlFor='folder-name-input'>
+                Name
+              </label>
+              <input type='text' id='folder-name-input' name='folder-name' 
+              onChange={e=> this.updateName(e.target.value)}/>
+            </div>
+            <div className='buttons'>
+              <button type='submit'>
+                Add folder
+              </button>
+            </div>
+          </NotefulForm>
       </section>
     )
   }
+}
+
+AddFolder.propType = {
+  folders : PropType.string
 }

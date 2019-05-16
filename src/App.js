@@ -9,6 +9,7 @@ import AddNote from './AddNote';
 //import { getNotesForFolder, findNote, findFolder } from './notes-helpers'
 import NotefulContext from './notefulContext'
 import config from './config'
+import Error from './error'
 
 import React, { Component } from 'react'
 
@@ -16,6 +17,11 @@ class App extends Component {
   state = {
     notes: [],
     folders: [],
+    hasError: false,
+    validationMessages : {
+      name: '',
+      addFolder: ''
+    }
   };
 
   componentDidMount() {
@@ -65,7 +71,7 @@ class App extends Component {
         notes: this.state.notes.filter(note => note.id !== noteId)
       })
     }
-  
+
     renderNavRoutes() {
       return (
         <>
@@ -108,6 +114,7 @@ class App extends Component {
             path='/note/:noteId'
             component={NotePageMain}
           />
+
           <Route
             path='/add-folder'
             component={AddFolder}
@@ -128,23 +135,28 @@ class App extends Component {
         addNote: this.handleAddNote,
         deleteNote: this.handleDeleteNote,
       }
+      
+      const error = new Error('message');
+
       return (
-        <NotefulContext.Provider value={value}>
-          <div className='App'>
-            <nav className='App__nav'>
-              {this.renderNavRoutes()}
-            </nav>
-            <header className='App__header'>
-              <h1>
-                <Link to='/'>Noteful</Link>
-                {' '}
-              </h1>
-            </header>
-            <main className='App__main'>
-              {this.renderMainRoutes()}
-            </main>
-          </div>
-        </NotefulContext.Provider>
+        <Error value={this.state.hasError}>
+          <NotefulContext.Provider value={value}>
+            <div className='App'>
+              <nav className='App__nav'>
+                {this.renderNavRoutes()}
+              </nav>
+              <header className='App__header'>
+                <h1>
+                  <Link to='/'>Noteful</Link>
+                  {' '}
+                </h1>
+              </header>
+              <main className='App__main'>
+                {this.renderMainRoutes()}
+              </main>
+            </div>
+          </NotefulContext.Provider>
+        </Error>
       )
     }
   }
