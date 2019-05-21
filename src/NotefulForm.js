@@ -2,7 +2,6 @@ import React from 'react'
 import PropType from 'prop-types'
 
 export default function NotefulForm(props) {
-  console.log(props, 'props')
   const { className, ...otherProps } = props
   return (
     <form

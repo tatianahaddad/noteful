@@ -50,7 +50,7 @@ export default class AddNote extends Component {
             <label htmlFor='note-name-input'>
               Name
             </label>
-            <input type='text' id='note-name-input' name='note-name' />
+            <input type='text' id='note-name-input' name='note-name' required/>
           </div>
           <div className='field'>
             <label htmlFor='note-content-input'>

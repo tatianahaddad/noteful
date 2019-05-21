@@ -9,7 +9,6 @@ import AddNote from './AddNote';
 //import { getNotesForFolder, findNote, findFolder } from './notes-helpers'
 import NotefulContext from './notefulContext'
 import config from './config'
-import Error from './error'
 
 import React, { Component } from 'react'
 
@@ -17,7 +16,6 @@ class App extends Component {
   state = {
     notes: [],
     folders: [],
-    hasError: false,
     validationMessages : {
       name: '',
       addFolder: ''
@@ -128,6 +126,7 @@ class App extends Component {
     }
   
     render() {
+      //throw new Error('error');
       const value = {
         notes: this.state.notes,
         folders: this.state.folders,
@@ -136,10 +135,8 @@ class App extends Component {
         deleteNote: this.handleDeleteNote,
       }
       
-      const error = new Error('message');
 
       return (
-        <Error value={this.state.hasError}>
           <NotefulContext.Provider value={value}>
             <div className='App'>
               <nav className='App__nav'>
@@ -156,7 +153,7 @@ class App extends Component {
               </main>
             </div>
           </NotefulContext.Provider>
-        </Error>
+        
       )
     }
   }
