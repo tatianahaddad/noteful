@@ -47,9 +47,9 @@ export default class AddFolder extends Component {
         this.context.addFolder(folder)
         this.props.history.push(`/folder/${folder.id}`)
       })
-      /*.catch(error => {
+      .catch(error => {
         console.error({ error })
-      })*/
+      })
   }
 
   /*updateName(name) {
