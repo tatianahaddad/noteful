@@ -10,16 +10,13 @@ import AddNote from './AddNote';
 import NotefulContext from './notefulContext'
 import config from './config'
 
+
 import React, { Component } from 'react'
 
 class App extends Component {
   state = {
     notes: [],
     folders: [],
-    validationMessages : {
-      name: '',
-      addFolder: ''
-    }
   };
 
   componentDidMount() {

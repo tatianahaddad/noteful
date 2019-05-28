@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import config from './config'
 import notefulContext from './notefulContext';
+import PropTypes from 'prop-types'
 
 export default class Note extends React.Component {
   static defaultProps ={
@@ -63,4 +64,11 @@ export default class Note extends React.Component {
       </div>
     )
   }
+}
+
+Note.propTypes = {
+  id: PropTypes.string,
+  name: PropTypes.string,
+  modified: PropTypes.string,
+  onDeleteNote: PropTypes.func
 }

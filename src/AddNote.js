@@ -3,8 +3,81 @@ import NotefulForm from './NotefulForm'
 import NotefulContext from './notefulContext'
 import config from './config'
 import Error from './error'
+import ValidationError from './validationError'
 
 export default class AddNote extends Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      name: '',
+      content: '',
+      nameValid: false,
+      contentValid: false,
+      formValid: false,
+      validationMessages: {
+        name: '',
+        content: '',
+      }
+    }
+  }
+
+  updateName(name){
+    this.setState({name}, () => {this.validateName(name)})
+  }
+
+  updateContent(content) {
+    this.setState({content}, () => {this.validateContent(content)})
+  }
+
+  validateName(enteredValue) {
+    const errors = {...this.state.validationMessages}
+    let hasError= false;
+    
+
+    enteredValue= enteredValue.trim();
+    if (enteredValue.length === 0) {
+      errors.name= 'Please enter a name';
+      hasError= true;
+    } else {
+      if (enteredValue.length < 3) {
+        errors.name= 'Please enter a name with at least 3 characters'
+        hasError= true;
+      } else {
+        errors.name = ''
+        hasError = false;
+      }
+    }
+
+    this.setState({
+      validationMessages: errors,
+      nameValid: !hasError
+    }, this.formValid);
+  }
+
+  validateContent(enteredContent) {
+    const errors = {...this.state.validationMessages}
+    let hasError= false;
+
+    enteredContent = enteredContent.trim()
+    if(enteredContent.length === 0) {
+      errors.content = 'Please enter content.'
+      hasError= true;
+    } else {
+      errors.content = ''
+      hasError= false
+    }
+
+    this.setState({
+      validationMessages: errors,
+      contentValid: !hasError
+    }, this.formValid)
+  }
+
+  formValid() {
+    this.setState({
+      formValid: this.state.nameValid && this.state.contentValid
+    });
+  }
   static defaultProps = {
     history: {
       push: () => { }
@@ -52,13 +125,17 @@ export default class AddNote extends Component {
               <label htmlFor='note-name-input'>
                 Name
               </label>
-              <input type='text' id='note-name-input' name='note-name' required/>
+              <input type='text' id='note-name-input' name='note-name' required onChange={e => this.updateName(e.target.value)}/>
+              <ValidationError hasErrors={!this.state.nameValid} message={this.state.validationMessages.name} />
             </div>
             <div className='field'>
               <label htmlFor='note-content-input'>
                 Content
               </label>
-              <textarea id='note-content-input' name='note-content' />
+              <textarea id='note-content-input' name='note-content' required 
+              onChange={e=> this.updateContent(e.target.value)}
+              />
+              <ValidationError hasErrors={!this.state.contentValid} message={this.state.validationMessages.content} />
             </div>
             <div className='field'>
               <label htmlFor='note-folder-select'>
@@ -74,7 +151,7 @@ export default class AddNote extends Component {
               </select>
             </div>
             <div className='buttons'>
-              <button type='submit'>
+              <button type='submit' disabled= {!this.state.formValid}>
                 Add note
               </button>
             </div>
